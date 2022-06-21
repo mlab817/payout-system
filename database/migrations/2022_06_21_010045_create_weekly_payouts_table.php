@@ -13,14 +13,18 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('personal_access_tokens', function (Blueprint $table) {
+        Schema::create('weekly_payouts', function (Blueprint $table) {
             $table->id();
-            $table->morphs('tokenable');
-            $table->string('name');
-            $table->string('token', 64)->unique();
-            $table->text('abilities')->nullable();
-            $table->timestamp('last_used_at')->nullable();
+            // operator
+            // weekly payout
             $table->timestamps();
+        });
+
+        Schema::table('daily_payouts', function (Blueprint $table) {
+            $table->foreignId('weekly_payout_id')
+                ->nullable()
+                ->constrained()
+                ->nullOnDelete();
         });
     }
 
@@ -31,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('personal_access_tokens');
+        Schema::dropIfExists('payouts');
     }
 };

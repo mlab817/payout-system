@@ -13,14 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('failed_jobs', function (Blueprint $table) {
-            $table->id();
-            $table->string('uuid')->unique();
-            $table->text('connection');
-            $table->text('queue');
-            $table->longText('payload');
-            $table->longText('exception');
-            $table->timestamp('failed_at')->useCurrent();
+        Schema::create('service_plan_vehicle', function (Blueprint $table) {
+            $table->foreignId('service_plan_id')
+                ->constrained()
+                ->cascadeOnDelete();
+            $table->unsignedInteger('vehicle_id');
+
+            $table->unique(['service_plan_id', 'vehicle_id'], 'sp_vehicle_idx');
         });
     }
 
@@ -31,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('failed_jobs');
+        Schema::dropIfExists('service_plan_vehicle');
     }
 };

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +15,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return Inertia::render('Welcome');
 });
+
+Route::resource('service-plans', \App\Http\Controllers\ServicePlanController::class);
+Route::resource('operators', \App\Http\Controllers\OperatorController::class);
